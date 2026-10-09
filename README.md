@@ -7,8 +7,6 @@ This is the official macOS port of [Week HP](https://github.com/asterion/week-hp
 the GNOME Shell extension by [asterion](https://github.com/asterion),
 made with the author's permission.
 
-> **Status:** work in progress. The first release (1.0.0) is not out yet.
-
 ## How it works
 
 The bar has five segments, one for each day from Monday to Friday.
@@ -58,7 +56,7 @@ macOS 13 (Ventura) or later.
 
 ## Installation
 
-Coming soon through a Homebrew tap.
+Homebrew support is coming soon. Meanwhile, build it from source as shown below.
 
 ## Building from source
 
