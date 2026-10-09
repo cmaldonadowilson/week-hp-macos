@@ -5,7 +5,7 @@ import Foundation
 
 public enum WeekHP {
     public static let name = "Week HP"
-    public static let version = "1.0.0"
+    public static let version = "1.1.0"
     public static let bundleIdentifier = "com.cmaldonadowilson.weekhp"
     public static let originalProjectURL = URL(string: "https://github.com/asterion/week-hp")!
 

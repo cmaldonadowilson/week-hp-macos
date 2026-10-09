@@ -19,9 +19,9 @@ public enum LaunchCommand: Equatable, Sendable {
           --version   Print the version and exit
           --help      Show this help and exit
 
-        Working hours are set with `defaults write com.cmaldonadowilson.weekhp`
-        (dayStartHour, dayEndHour, fridayEndHour). More at
-        https://github.com/cmaldonadowilson/week-hp-macos
+        Change the work schedule and the bar in Settings…, in the Week HP menu,
+        or with `defaults write com.cmaldonadowilson.weekhp <key> <value>`.
+        More at https://github.com/cmaldonadowilson/week-hp-macos
         """
 
     /// The first option decides. Single-dash arguments such as
