@@ -56,7 +56,25 @@ macOS 13 (Ventura) or later.
 
 ## Installation
 
-Homebrew support is coming soon. Meanwhile, build it from source as shown below.
+With [Homebrew](https://brew.sh):
+
+```bash
+brew install cmaldonadowilson/tap/week-hp
+brew services start week-hp   # open it now and at every login
+```
+
+Use the full name `cmaldonadowilson/tap/week-hp` the first time: Homebrew
+trusts formulae from other taps only when they are named in full.
+It is built from source, so the Command Line Tools are needed
+(`xcode-select --install`). If your menu bar is full, macOS may hide
+Week HP behind the notch.
+
+To remove it:
+
+```bash
+brew services stop week-hp
+brew uninstall week-hp
+```
 
 ## Building from source
 
