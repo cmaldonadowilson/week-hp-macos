@@ -12,6 +12,7 @@ final class StatusController: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
     private var barView: HealthBarView!
     private var timer: Timer?
+    private var settingsWindow: SettingsWindowController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -41,19 +42,32 @@ final class StatusController: NSObject, NSApplicationDelegate {
     private func makeMenu() -> NSMenu {
         let menu = NSMenu()
         menu.addItem(withTitle: tr("About Week HP"), action: #selector(showAbout), keyEquivalent: "").target = self
+        menu.addItem(withTitle: tr("Settings…"), action: #selector(showSettings), keyEquivalent: ",").target = self
         menu.addItem(.separator())
         menu.addItem(withTitle: tr("Quit Week HP"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         return menu
     }
 
     @objc private func update() {
-        // Reads the working hours every time, so `defaults write` changes show up within a minute
-        let progress = WeekProgress.current()
+        // Reads the settings every time, so `defaults write` changes show up within a minute
+        let configuration = Configuration.load()
+        let progress = WeekProgress.current(schedule: configuration.schedule)
         let text = tr.status(for: progress)
 
-        barView.show(progress, text: text)
+        barView.show(progress, text: text, appearance: configuration.appearance)
         statusItem.length = barView.contentWidth
+        statusItem.button?.toolTip = text
         statusItem.button?.setAccessibilityLabel("\(WeekHP.name): \(text)")
+    }
+
+    @objc private func showSettings() {
+        if settingsWindow == nil {
+            // Changes show up in the bar right away
+            settingsWindow = SettingsWindowController(tr: tr) { [weak self] in
+                self?.update()
+            }
+        }
+        settingsWindow?.show()
     }
 
     // Fires at the start of every minute, when the percentage may change

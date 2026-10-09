@@ -9,31 +9,59 @@ made with the author's permission.
 
 ## How it works
 
-The bar has five segments, one for each day from Monday to Friday.
+The bar has one segment for each work day, from Monday to Friday by default.
 The current day fills up little by little during working hours, and the color
 changes as you make progress, just like a health bar in a video game.
 
-- Days progress from **9:00 to 18:00**. Friday is a short day and ends at **13:00**.
+- Days progress from **9:00 to 18:00**. Friday, the last work day, is a short
+  day and ends at **13:00**.
 - **Red** below 40%, **yellow** below 80%, **green** after that.
-- When Friday's workday ends, the heart turns into a star and the weekly goal is complete.
+- When the last workday ends, the heart turns into a star and the weekly goal is complete.
   The bar stays full over the weekend and starts again on Monday.
+- Hover over it to see the day and the percentage in a tooltip.
 
 Week HP follows your system language and speaks **English, Spanish and French**.
 It lives only in the menu bar: quit it from its menu.
 
-## Customize your hours
+## Settings
 
-Hours can have decimals (8.5 is 8:30). Changes show up within a minute:
+Choose **Settings…** in the Week HP menu to change, with the changes showing up
+right away:
+
+- **Work schedule**: work days per week (1 to 7, from Monday), when a day
+  starts, when it counts as complete, and when the last work day ends.
+- **Bar appearance**: segment width and the progress where the bar turns
+  yellow and green.
+- **Colors**: the fill color for each progress level and the goal color. By
+  default the goal color gets darker on a light menu bar; a color you choose
+  is used as is.
+
+**Restore default values** at the bottom goes back to the original settings.
+These settings come from the
+[Week HP applet for Cinnamon](https://github.com/asterion/week-hp-cinnamon).
+
+They can also be set from the terminal, in the `com.cmaldonadowilson.weekhp`
+domain. Changes show up within a minute:
 
 ```bash
-defaults write com.cmaldonadowilson.weekhp dayStartHour 8.5
-defaults write com.cmaldonadowilson.weekhp dayEndHour 17
-defaults write com.cmaldonadowilson.weekhp fridayEndHour 14
+defaults write com.cmaldonadowilson.weekhp workDays 6
+defaults write com.cmaldonadowilson.weekhp dayStartHour 8.5   # 8:30
+defaults write com.cmaldonadowilson.weekhp goalColor '#00F5D4'
 ```
 
-With 0 and 24 each day progresses over the whole 24 hours. If the hours don't
-make sense (a day ending before it starts), the defaults are used. To go back
-to them:
+| Key | Default | Values |
+|---|---|---|
+| `workDays` | 5 | 1 to 7 |
+| `dayStartHour` | 9 | 0 to 24, with decimals |
+| `dayEndHour` | 18 | 0 to 24, later than `dayStartHour` |
+| `lastDayEndHour` | 13 | 0 to 24, later than `dayStartHour` |
+| `segmentWidth` | 14 | 4 to 40 points |
+| `midThreshold` | 40 | 0 to 100 %, below `highThreshold` |
+| `highThreshold` | 80 | 0 to 100 % |
+| `fillLowColor`, `fillMidColor`, `fillHighColor`, `goalColor` | | `#RRGGBB` |
+
+Values that don't make sense fall back to their defaults. `fridayEndHour`, the
+name of `lastDayEndHour` in version 1.0, still works. To go back to the defaults:
 
 ```bash
 defaults delete com.cmaldonadowilson.weekhp
@@ -91,7 +119,8 @@ Swift 6 (Command Line Tools 16 or later); building the app does not.
 ## Credits
 
 Original idea, design and GNOME Shell extension:
-[asterion/week-hp](https://github.com/asterion/week-hp).
+[asterion/week-hp](https://github.com/asterion/week-hp). Settings and their
+translations: [asterion/week-hp-cinnamon](https://github.com/asterion/week-hp-cinnamon).
 
 ## License
 

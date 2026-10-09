@@ -14,7 +14,7 @@ enum WeekHPApp {
         case .runApp:
             break
         case .printStatus:
-            print(Translations().status(for: .current()))
+            print(Translations().status(for: .current(schedule: Configuration.load().schedule)))
             return
         case .printVersion:
             print("week-hp \(WeekHP.version)")
