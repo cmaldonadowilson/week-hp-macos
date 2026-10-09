@@ -33,9 +33,12 @@ Coming soon through a Homebrew tap.
 ## Building from source
 
 ```bash
-swift build -c release
+make build
 .build/release/week-hp --version
 ```
+
+Run the tests with `make test`. They use Swift Testing, which needs
+Swift 6 (Command Line Tools 16 or later); building the app does not.
 
 ## Credits
 

@@ -22,5 +22,11 @@ let package = Package(
             name: "week-hp",
             dependencies: ["WeekHPCore"]
         ),
+        // Swift Testing: needs Swift 6 (Command Line Tools 16 or later),
+        // only to run the tests, not to build the app
+        .testTarget(
+            name: "WeekHPCoreTests",
+            dependencies: ["WeekHPCore"]
+        ),
     ]
 )
