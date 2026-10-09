@@ -21,6 +21,25 @@ changes as you make progress, just like a health bar in a video game.
   The bar stays full over the weekend and starts again on Monday.
 
 Week HP follows your system language and speaks **English, Spanish and French**.
+It lives only in the menu bar: quit it from its menu.
+
+## Customize your hours
+
+Hours can have decimals (8.5 is 8:30). Changes show up within a minute:
+
+```bash
+defaults write com.cmaldonadowilson.weekhp dayStartHour 8.5
+defaults write com.cmaldonadowilson.weekhp dayEndHour 17
+defaults write com.cmaldonadowilson.weekhp fridayEndHour 14
+```
+
+With 0 and 24 each day progresses over the whole 24 hours. If the hours don't
+make sense (a day ending before it starts), the defaults are used. To go back
+to them:
+
+```bash
+defaults delete com.cmaldonadowilson.weekhp
+```
 
 ## Requirements
 
@@ -34,8 +53,10 @@ Coming soon through a Homebrew tap.
 
 ```bash
 make build
-.build/release/week-hp --version
+.build/release/week-hp
 ```
+
+`week-hp --version` prints the version without opening the app.
 
 Run the tests with `make test`. They use Swift Testing, which needs
 Swift 6 (Command Line Tools 16 or later); building the app does not.
