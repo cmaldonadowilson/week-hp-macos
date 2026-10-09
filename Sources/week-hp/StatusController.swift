@@ -47,11 +47,8 @@ final class StatusController: NSObject, NSApplicationDelegate {
     }
 
     @objc private func update() {
-        // Read every time, so `defaults write` changes show up within a minute
-        let hours = WorkHours.load(from: WeekHP.userDefaults)
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = .current
-        let progress = WeekProgress(at: Date(), calendar: calendar, hours: hours)
+        // Reads the working hours every time, so `defaults write` changes show up within a minute
+        let progress = WeekProgress.current()
         let text = tr.status(for: progress)
 
         barView.show(progress, text: text)

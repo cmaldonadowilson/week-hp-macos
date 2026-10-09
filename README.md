@@ -41,6 +41,17 @@ to them:
 defaults delete com.cmaldonadowilson.weekhp
 ```
 
+## Command line
+
+```bash
+week-hp --print     # the week progress without opening the app, e.g. "Wed 52%"
+week-hp --version
+week-hp --help
+```
+
+To try another language, add `-AppleLanguages '(fr)'` (or `es`, `en`).
+Only one Week HP runs at a time: opening it again while it's running does nothing.
+
 ## Requirements
 
 macOS 13 (Ventura) or later.

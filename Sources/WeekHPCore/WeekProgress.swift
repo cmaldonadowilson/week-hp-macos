@@ -69,4 +69,11 @@ public struct WeekProgress: Equatable, Sendable {
         today = weekday
         total = days.reduce(0, +) / Double(Self.workDays)
     }
+
+    /// Progress right now in the local time zone, with the working hours set by the user.
+    public static func current(defaults: UserDefaults = WeekHP.userDefaults) -> WeekProgress {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = .current
+        return WeekProgress(at: Date(), calendar: calendar, hours: WorkHours.load(from: defaults))
+    }
 }
