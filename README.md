@@ -65,9 +65,9 @@ brew services start week-hp   # open it now and at every login
 
 Use the full name `cmaldonadowilson/tap/week-hp` the first time: Homebrew
 trusts formulae from other taps only when they are named in full.
-It is built from source, so the Command Line Tools are needed
-(`xcode-select --install`). If your menu bar is full, macOS may hide
-Week HP behind the notch.
+On macOS 15 or later it installs a prebuilt bottle; on macOS 13 and 14 it is
+built from source, which needs the Command Line Tools (`xcode-select --install`).
+If your menu bar is full, macOS may hide Week HP behind the notch.
 
 To remove it:
 
