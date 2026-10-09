@@ -21,6 +21,7 @@ public struct Configuration: Equatable, Sendable {
         BarAppearance.fillMidColorKey,
         BarAppearance.fillHighColorKey,
         BarAppearance.goalColorKey,
+        BarAppearance.compactKey,
     ]
 
     public var schedule: WorkSchedule

@@ -13,6 +13,7 @@ final class StatusController: NSObject, NSApplicationDelegate {
     private var barView: HealthBarView!
     private var timer: Timer?
     private var settingsWindow: SettingsWindowController?
+    private var compactItem: NSMenuItem!
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -41,8 +42,11 @@ final class StatusController: NSObject, NSApplicationDelegate {
 
     private func makeMenu() -> NSMenu {
         let menu = NSMenu()
+        menu.delegate = self
         menu.addItem(withTitle: tr("About Week HP"), action: #selector(showAbout), keyEquivalent: "").target = self
         menu.addItem(withTitle: tr("Settings…"), action: #selector(showSettings), keyEquivalent: ",").target = self
+        compactItem = menu.addItem(withTitle: tr("Compact Mode"), action: #selector(toggleCompactMode), keyEquivalent: "")
+        compactItem.target = self
         menu.addItem(.separator())
         menu.addItem(withTitle: tr("Quit Week HP"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         return menu
@@ -68,6 +72,14 @@ final class StatusController: NSObject, NSApplicationDelegate {
             }
         }
         settingsWindow?.show()
+    }
+
+    @objc private func toggleCompactMode() {
+        // Only this key: the other settings keep their defaults
+        let defaults = WeekHP.userDefaults
+        defaults.set(!Configuration.load(from: defaults).appearance.compact, forKey: BarAppearance.compactKey)
+        settingsWindow?.reload()
+        update()
     }
 
     // Fires at the start of every minute, when the percentage may change
@@ -110,5 +122,12 @@ final class StatusController: NSObject, NSApplicationDelegate {
             .credits: credits,
             NSApplication.AboutPanelOptionKey(rawValue: "Copyright"): "GPL-2.0-or-later",
         ])
+    }
+}
+
+extension StatusController: NSMenuDelegate {
+    // The compact mode may have changed in Settings or with `defaults write`
+    func menuNeedsUpdate(_ menu: NSMenu) {
+        compactItem.state = Configuration.load().appearance.compact ? .on : .off
     }
 }

@@ -107,3 +107,27 @@ func invalidThresholdsFallBackTogether(mid: Double, high: Double) {
         #expect(BarAppearance.load(from: defaults) == appearance)
     }
 }
+
+@Test func compactModeIsOffByDefault() {
+    #expect(!BarAppearance.standard.compact)
+    withDefaults { defaults in
+        #expect(!BarAppearance.load(from: defaults).compact)
+    }
+}
+
+// `defaults write <id> compactMode -bool true`, or without -bool, which stores a string
+@Test(arguments: [(true, "true"), (true, "YES"), (true, "1"), (false, "false"), (false, "NO"), (false, "0"), (false, "maybe")])
+func compactModeReadsStrings(expected: Bool, value: String) {
+    withDefaults { defaults in
+        defaults.set(value, forKey: BarAppearance.compactKey)
+        #expect(BarAppearance.load(from: defaults).compact == expected)
+    }
+}
+
+@Test(arguments: [true, false])
+func compactModeReadsBooleans(value: Bool) {
+    withDefaults { defaults in
+        defaults.set(value, forKey: BarAppearance.compactKey)
+        #expect(BarAppearance.load(from: defaults).compact == value)
+    }
+}

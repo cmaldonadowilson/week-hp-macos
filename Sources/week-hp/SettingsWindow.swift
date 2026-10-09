@@ -27,6 +27,11 @@ final class SettingsWindowController {
         window.center()
     }
 
+    /// Shows the settings changed elsewhere, e.g. the compact mode from the menu.
+    func reload() {
+        model.reload()
+    }
+
     func show() {
         // Shows what `defaults write` may have changed while the window was closed
         model.reload()
@@ -119,6 +124,8 @@ struct SettingsView: View {
             }
 
             Section(tr("Bar appearance")) {
+                Toggle(tr("Compact mode"), isOn: $model.configuration.appearance.compact)
+                    .help(tr("Hide the text next to the bar: the day and the percentage show up when you hover over it."))
                 row(tr("Segment width"), value: "\(appearance.segmentWidth) px",
                     help: tr("Width of each day segment in the bar.")) {
                     Stepper("", value: $model.configuration.appearance.segmentWidth, in: BarAppearance.segmentWidthRange)

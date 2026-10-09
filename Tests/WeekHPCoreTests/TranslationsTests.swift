@@ -86,6 +86,8 @@ func settingsTextsAreTranslated(language: String) {
         "Day is complete at", "Last work day ends at", "Bar appearance", "Segment width",
         "Turns yellow at", "Turns green at", "Colors", "Fill color: low progress",
         "Fill color: mid progress", "Fill color: high progress", "Goal color", "Restore default values",
+        "Compact Mode", "Compact mode",
+        "Hide the text next to the bar: the day and the percentage show up when you hover over it.",
     ]
     #expect(texts.filter { tr($0) == $0 } == [])
 }

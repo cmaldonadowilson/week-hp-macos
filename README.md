@@ -30,13 +30,18 @@ right away:
 
 - **Work schedule**: work days per week (1 to 7, from Monday), when a day
   starts, when it counts as complete, and when the last work day ends.
-- **Bar appearance**: segment width and the progress where the bar turns
-  yellow and green.
+- **Bar appearance**: compact mode, segment width and the progress where the
+  bar turns yellow and green.
 - **Colors**: the fill color for each progress level and the goal color. By
   default the goal color gets darker on a light menu bar; a color you choose
   is used as is.
 
 **Restore default values** at the bottom goes back to the original settings.
+
+If the menu bar is short of room, for example on a MacBook with a notch,
+choose **Compact Mode** in the Week HP menu: it hides the text and keeps the
+icon and the bar, about 40% narrower. The day and the percentage are still
+in the tooltip.
 These settings come from the
 [Week HP applet for Cinnamon](https://github.com/asterion/week-hp-cinnamon).
 
@@ -55,6 +60,7 @@ defaults write com.cmaldonadowilson.weekhp goalColor '#00F5D4'
 | `dayStartHour` | 9 | 0 to 24, with decimals |
 | `dayEndHour` | 18 | 0 to 24, later than `dayStartHour` |
 | `lastDayEndHour` | 13 | 0 to 24, later than `dayStartHour` |
+| `compactMode` | false | `true` hides the text |
 | `segmentWidth` | 14 | 4 to 40 points |
 | `midThreshold` | 40 | 0 to 100 %, below `highThreshold` |
 | `highThreshold` | 80 | 0 to 100 % |
@@ -95,7 +101,9 @@ Use the full name `cmaldonadowilson/tap/week-hp` the first time: Homebrew
 trusts formulae from other taps only when they are named in full.
 On macOS 15 or later it installs a prebuilt bottle; on macOS 13 and 14 it is
 built from source, which needs the Command Line Tools (`xcode-select --install`).
-If your menu bar is full, macOS may hide Week HP behind the notch.
+If your menu bar is full, macOS may hide Week HP behind the notch. Compact
+Mode makes it narrower; if you can't reach its menu, turn it on with
+`defaults write com.cmaldonadowilson.weekhp compactMode -bool true`.
 
 To remove it:
 

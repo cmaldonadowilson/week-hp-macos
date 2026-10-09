@@ -13,6 +13,7 @@ import Testing
         configuration.appearance.segmentWidth = 10
         configuration.appearance.highThreshold = 90
         configuration.appearance.goalColor = HexColor(hex: "#AABBCC")
+        configuration.appearance.compact = true
         configuration.save(to: defaults)
 
         #expect(Configuration.load(from: defaults) == configuration)

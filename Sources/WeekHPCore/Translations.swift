@@ -26,6 +26,10 @@ public struct Translations: Sendable {
             "About Week HP": "Acerca de Week HP",
             "Settings…": "Ajustes…",
             "Quit Week HP": "Salir de Week HP",
+            "Compact Mode": "Modo compacto",
+            "Compact mode": "Modo compacto",
+            "Hide the text next to the bar: the day and the percentage show up when you hover over it.":
+                "Oculta el texto junto a la barra: el día y el porcentaje aparecen al pasar el puntero sobre ella.",
             "Official macOS port of Week HP by asterion.": "Port oficial para macOS de Week HP, de asterion.",
 
             "Week HP Settings": "Ajustes de Week HP",
@@ -82,6 +86,10 @@ public struct Translations: Sendable {
             "About Week HP": "À propos de Week HP",
             "Settings…": "Réglages…",
             "Quit Week HP": "Quitter Week HP",
+            "Compact Mode": "Mode compact",
+            "Compact mode": "Mode compact",
+            "Hide the text next to the bar: the day and the percentage show up when you hover over it.":
+                "Masque le texte à côté de la barre : le jour et le pourcentage s’affichent au survol.",
             "Official macOS port of Week HP by asterion.": "Portage officiel pour macOS de Week HP, par asterion.",
 
             "Week HP Settings": "Réglages de Week HP",

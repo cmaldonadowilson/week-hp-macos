@@ -51,6 +51,7 @@ public struct BarAppearance: Equatable, Sendable {
     public static let fillMidColorKey = "fillMidColor"
     public static let fillHighColorKey = "fillHighColor"
     public static let goalColorKey = "goalColor"
+    public static let compactKey = "compactMode"
 
     /// Width of each day segment, in points
     public var segmentWidth = 14
@@ -63,6 +64,8 @@ public struct BarAppearance: Equatable, Sendable {
     public var fillMidColor: HexColor?
     public var fillHighColor: HexColor?
     public var goalColor: HexColor?
+    /// Shows only the icon and the bar, without the text, to take less room in the menu bar
+    public var compact = false
 
     public init() {}
 
@@ -105,6 +108,8 @@ public struct BarAppearance: Equatable, Sendable {
         appearance.fillMidColor = color(fillMidColorKey)
         appearance.fillHighColor = color(fillHighColorKey)
         appearance.goalColor = color(goalColorKey)
+        // Also reads "true" or "YES" written by `defaults write` without -bool
+        appearance.compact = defaults.bool(forKey: compactKey)
         return appearance
     }
 
@@ -112,6 +117,7 @@ public struct BarAppearance: Equatable, Sendable {
         defaults.set(segmentWidth, forKey: Self.segmentWidthKey)
         defaults.set(midThreshold, forKey: Self.midThresholdKey)
         defaults.set(highThreshold, forKey: Self.highThresholdKey)
+        defaults.set(compact, forKey: Self.compactKey)
         let colors = [
             Self.fillLowColorKey: fillLowColor,
             Self.fillMidColorKey: fillMidColor,

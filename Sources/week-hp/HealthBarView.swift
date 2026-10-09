@@ -50,7 +50,9 @@ final class HealthBarView: NSView {
     }
 
     var contentWidth: CGFloat {
-        2 * Metrics.edgeInset + Metrics.iconSize + Metrics.spacing + frameWidth + Metrics.spacing + textWidth
+        let iconAndBar = 2 * Metrics.edgeInset + Metrics.iconSize + Metrics.spacing + frameWidth
+        // The compact mode leaves the text to the tooltip
+        return barAppearance.compact ? iconAndBar : iconAndBar + Metrics.spacing + textWidth
     }
 
     func show(_ progress: WeekProgress, text: String, appearance: BarAppearance) {
@@ -104,6 +106,9 @@ final class HealthBarView: NSView {
         }
         x += frameWidth + Metrics.spacing
 
+        guard !barAppearance.compact else {
+            return
+        }
         let attributes: [NSAttributedString.Key: Any] = [
             .font: Self.font,
             .foregroundColor: complete ? palette.goal : NSColor.labelColor,
