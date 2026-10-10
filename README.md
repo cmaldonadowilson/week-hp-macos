@@ -19,6 +19,8 @@ changes as you make progress, just like a health bar in a video game.
 - When the last workday ends, the heart turns into a star and the weekly goal is complete.
   The bar stays full over the weekend and starts again on Monday.
 - Hover over it to see the day and the percentage in a tooltip.
+- Open its menu to see how much is left: of today (`3 h 36 min left today`)
+  and until the goal (`Goal in 2 days (Fri 13:00)`).
 
 Week HP follows your system language and speaks **English, Spanish and French**.
 It lives only in the menu bar: quit it from its menu.

@@ -26,6 +26,13 @@ public struct Translations: Sendable {
             "About Week HP": "Acerca de Week HP",
             "Settings…": "Ajustes…",
             "Quit Week HP": "Salir de Week HP",
+            "Today starts at %@": "El día empieza a las %@",
+            "%@ left today": "Quedan %@ hoy",
+            "Today is complete": "Hoy ya está completo",
+            "Goal today at %@": "Meta hoy a las %@",
+            "Goal tomorrow at %@": "Meta mañana a las %@",
+            "Goal in %d days (%@)": "Meta en %d días (%@)",
+            "Next week: %@": "Próxima semana: %@",
             "Compact Mode": "Modo compacto",
             "Compact mode": "Modo compacto",
             "Hide the text next to the bar: the day and the percentage show up when you hover over it.":
@@ -86,6 +93,13 @@ public struct Translations: Sendable {
             "About Week HP": "À propos de Week HP",
             "Settings…": "Réglages…",
             "Quit Week HP": "Quitter Week HP",
+            "Today starts at %@": "La journée commence à %@",
+            "%@ left today": "Il reste %@ aujourd’hui",
+            "Today is complete": "La journée est complète",
+            "Goal today at %@": "Objectif aujourd’hui à %@",
+            "Goal tomorrow at %@": "Objectif demain à %@",
+            "Goal in %d days (%@)": "Objectif dans %d jours (%@)",
+            "Next week: %@": "Semaine prochaine : %@",
             "Compact Mode": "Mode compact",
             "Compact mode": "Mode compact",
             "Hide the text next to the bar: the day and the percentage show up when you hover over it.":
@@ -169,6 +183,45 @@ public struct Translations: Sendable {
             return "\(count) (\(first))"
         }
         return "\(count) (\(first)–\(self(Self.dayNames[min(count, Self.dayNames.count) - 1])))"
+    }
+
+    /// Lines of the menu below the status: what is left of today, if it is a
+    /// work day, and of the week, e.g. "3 h 36 min left today" and "Goal in 2 days (Fri 13:00)".
+    public func lines(for outlook: WeekOutlook) -> [String] {
+        var lines: [String] = []
+        switch outlook.today {
+        case .startsAt(let hour):
+            lines.append(String(format: self("Today starts at %@"), Self.clockTime(hour)))
+        case .minutesLeft(let minutes):
+            lines.append(String(format: self("%@ left today"), Self.duration(minutes: minutes)))
+        case .complete:
+            lines.append(self("Today is complete"))
+        case .dayOff:
+            break
+        }
+
+        switch outlook.goal {
+        case .today(let hour):
+            lines.append(String(format: self("Goal today at %@"), Self.clockTime(hour)))
+        case .tomorrow(let hour):
+            lines.append(String(format: self("Goal tomorrow at %@"), Self.clockTime(hour)))
+        case .inDays(let days, let weekday, let hour):
+            let moment = "\(self(Self.dayNames[weekday])) \(Self.clockTime(hour))"
+            lines.append(String(format: self("Goal in %d days (%@)"), days, moment))
+        case .reached(let hour):
+            lines.append(String(format: self("Next week: %@"), "\(self(Self.dayNames[0])) \(Self.clockTime(hour))"))
+        }
+        return lines
+    }
+
+    /// A length of time, e.g. "3 h 36 min", "8 h" or "45 min", the same in every language.
+    public static func duration(minutes: Int) -> String {
+        let hours = minutes / 60
+        let rest = minutes % 60
+        if hours == 0 {
+            return "\(rest) min"
+        }
+        return rest == 0 ? "\(hours) h" : "\(hours) h \(rest) min"
     }
 
     /// A percentage, e.g. "40%" ("40 %" in French).

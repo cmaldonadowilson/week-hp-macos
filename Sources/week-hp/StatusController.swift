@@ -14,6 +14,8 @@ final class StatusController: NSObject, NSApplicationDelegate {
     private var timer: Timer?
     private var settingsWindow: SettingsWindowController?
     private var compactItem: NSMenuItem!
+    // Status and what is left of the day and the week, at the top of the menu
+    private var detailItems: [NSMenuItem] = []
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -43,6 +45,8 @@ final class StatusController: NSObject, NSApplicationDelegate {
     private func makeMenu() -> NSMenu {
         let menu = NSMenu()
         menu.delegate = self
+        // The details go above this separator, see showDetails(_:)
+        menu.addItem(.separator())
         menu.addItem(withTitle: tr("About Week HP"), action: #selector(showAbout), keyEquivalent: "").target = self
         menu.addItem(withTitle: tr("Settings…"), action: #selector(showSettings), keyEquivalent: ",").target = self
         compactItem = menu.addItem(withTitle: tr("Compact Mode"), action: #selector(toggleCompactMode), keyEquivalent: "")
@@ -62,6 +66,23 @@ final class StatusController: NSObject, NSApplicationDelegate {
         statusItem.length = barView.contentWidth
         statusItem.button?.toolTip = text
         statusItem.button?.setAccessibilityLabel("\(WeekHP.name): \(text)")
+        showDetails([text] + tr.lines(for: .current(schedule: configuration.schedule)))
+    }
+
+    /// Replaces the lines at the top of the menu, which only give information.
+    private func showDetails(_ lines: [String]) {
+        guard let menu = statusItem.menu else {
+            return
+        }
+        detailItems.forEach(menu.removeItem)
+        detailItems = lines.map { line in
+            let item = NSMenuItem(title: line, action: nil, keyEquivalent: "")
+            item.isEnabled = false
+            return item
+        }
+        for (index, item) in detailItems.enumerated() {
+            menu.insertItem(item, at: index)
+        }
     }
 
     @objc private func showSettings() {
