@@ -1,0 +1,24 @@
+# Asks the Homebrew tap (cmaldonadowilson/homebrew-tap) to update week-hp as
+# soon as a release is published. The tap opens a pull request with the new
+# version, builds the bottles and publishes them on its own.
+name: Update Homebrew
+
+on:
+  release:
+    types: [published]
+  # To run it by hand, e.g. to check the token
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  bump:
+    # Homebrew only follows stable releases
+    if: github.event_name == 'workflow_dispatch' || !github.event.release.prerelease
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run the bump workflow of the tap
+        env:
+          # Personal access token with access to the tap: GITHUB_TOKEN only works in this repository
+          GH_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+        run: gh workflow run autobump.yml --repo cmaldonadowilson/homebrew-tap

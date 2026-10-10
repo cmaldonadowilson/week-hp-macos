@@ -124,6 +124,16 @@ make build
 Run the tests with `make test`. They use Swift Testing, which needs
 Swift 6 (Command Line Tools 16 or later); building the app does not.
 
+## Releasing
+
+1. Update `WeekHP.version` in `Sources/WeekHPCore/WeekHP.swift`.
+2. Tag the commit (`git tag -a v1.3.0`), push the tag and publish a GitHub
+   release for it.
+
+The `Update Homebrew` workflow then asks the
+[tap](https://github.com/cmaldonadowilson/homebrew-tap) to update the formula,
+which builds and publishes the bottles on its own, usually within half an hour.
+
 ## Credits
 
 Original idea, design and GNOME Shell extension:
